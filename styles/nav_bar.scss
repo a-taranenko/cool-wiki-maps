@@ -1,0 +1,22 @@
+#nav_bar {
+  position: fixed;
+  border: 1px, solid, black;
+
+  .logo {
+    float: left;
+  }
+
+  .header {
+    float: left;
+  }
+
+  .search_maps {
+    float: left;
+    margin-left: 50px;
+  }
+
+  .user_login {
+    float: right;
+  }
+}
+

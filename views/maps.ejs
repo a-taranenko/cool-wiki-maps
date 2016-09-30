@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+  </head>
+
+  <body>
+
+    <h1>Existing Collections</h1>
+
+    <table>
+      <tr>
+        <th>Map ID</th>
+        <th>Owner ID</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+
+      <% for (var key in maps) { %>
+      <tr>
+        <td><%= maps[key].id %></td>
+        <td><%= maps[key].owner_id %></td>
+        <td><%= maps[key].name %></td>
+        <td><%= maps[key].desc %></td>
+      </tr>
+      <% } %>
+
+    </table>
+
+  </body>
+</html>
