@@ -8,6 +8,7 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const cookieParser= require('cookie-parser');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -35,6 +36,7 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+app.use(cookieParser())
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
@@ -42,7 +44,7 @@ app.use("/login", loginRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {username: req.cookie.username});
 });
 
 // Login page
@@ -50,16 +52,16 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.post("/login", (req, res) => {
-  res.cookie("username", req.body.username, { maxAge: 900000, httpOnly: true });
-  res.redirect("/");
-});
-
 //logout
-app.post("/logout", (req, res) => {
-  res.clearCookie("username");
-  res.redirect("/");
-});
+// app.post("/logout", (req, res) => {
+//   res.clearCookie("username");
+//   res.redirect("/");
+// });
+
+//error page
+// app.get("/oops", (req, res) => {
+//   res.render("oops", {'error': req.body.error})
+// })
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
