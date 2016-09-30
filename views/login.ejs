@@ -1,17 +1,13 @@
-<% if (!username) { %>
 
 <form method="POST" action="/login">
-  <input type="text" name="username">
-  <input type="password" name="password">
+  <input type="text" name="username" placeholder="User Name">
+  <input type="password" name="password" placeholder="Password">
   <input type="submit" value="Login">
 </form>
 
-<% } else { %>
 
-<p>User: <%= username %></p>
 
 <form method="POST" action="/logout">
   <input type="submit" value="Logout">
 </form>
 
-<% } %>

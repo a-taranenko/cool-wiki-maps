@@ -7,4 +7,6 @@ let genRandomString = function(length){
             .slice(0,length);   /** return required number of characters */
 };
 
-console.log(genRandomString(36))
+//console.log(genRandomString(36))
+
+module.exports = genRandomString;

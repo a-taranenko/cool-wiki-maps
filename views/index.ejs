@@ -13,9 +13,6 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="   sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -27,8 +24,25 @@
   </head>
 
   <body>
-    <%- include('navbar'); %>
-    <%- include('map'); %>
-    <%- include('sidebar'); %>
+            <%- include('navbar'); %>
+    <div class='container-fluid height-100'>
+        <div class="row height-100">
+            <div class="col-md-12 height-100" id="no-padding">
+            <%- include('map'); %>
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute; top: 100px; z-index: 1000; right: 10px;">
+        <div>
+            <div  style="width: 100%">
+            <button class="btn btn-primary" type="button" data-toggle='collapse' data-target='#places-dropdown' aria-expanded="false" aria-controls="places-dropdown" style="width: 100%">HEY</button>
+            <div class="collapse" id="places-dropdown" style="position: absolute;">
+                <div class="well">
+                uyfwgiudwgbofuwbofeuwboufwbofweubofwubfowuvfowuvfowduvfoewuv
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>

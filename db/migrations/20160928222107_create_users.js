@@ -29,7 +29,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    knex.schema.table('users', function(table) {
+    knex.schema.alterTable('users', function(table) {
       table.dropColumn('usename');
       table.dropColumn('password');
       table.dropColumn('email');
