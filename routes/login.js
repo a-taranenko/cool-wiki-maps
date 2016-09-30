@@ -10,11 +10,12 @@ const randNumGen = require('../saltGen');
 
 app.use(bodyParser.json());
 
-let cookie = new CryptoCookie(req, res);
+
 
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
+    let cookie = new CryptoCookie(req, res);
     let body = req.body;
     console.log(body);
     knex
@@ -22,18 +23,27 @@ module.exports = (knex) => {
       .from("users")
       .where({
         username: body.username
+    })
+    .then((results) => {
+      console.log(results)
+      console.log(results[0])
+      if (results[0].password !== body.password) {
+        console.log("Verification failed! D=")
+        throw err;
+      } else {
+        return results;
+      }
+    })
+    .then((results) => {
+      let randID = randNumGen(36);
+      console.log(randID);
+      knex.select('users').where({username: results[0].username}).update({session_id: randID})
+      return randID
       })
-      .then((results) => {
-        console.log(results[0])
-        if (results[0].password === body.password) {
-          let randID = randNumGen(36);
-          res.cookie('sessionID', randID)
-
-          res.
-        } else {
-          console.log("Verification failed! D=")
-        }
-    });
+    .then((randID) => {
+      res.cookie('sessionID', randID)
+      res.redirect('/')
+    })
   });
 
   router.get('/:id',(req, res) => {

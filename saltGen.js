@@ -9,4 +9,4 @@ let genRandomString = function(length){
 
 //console.log(genRandomString(36))
 
-module.exports = genRandomString();
+module.exports = genRandomString;
