@@ -42,11 +42,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/markers", markersRoutes(knex));
 app.use("/login", loginRoutes(knex));
-<<<<<<< HEAD
-
-=======
 app.use("/maps", mapRoutes(knex));
->>>>>>> e16ee29396d09710c02170319c41ef7f9ea67f20
 
 // Home page
 app.get("/", (req, res) => {
