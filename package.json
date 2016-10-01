@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "./node_modules/.bin/nodemon server.js",
     "local": "./node_modules/.bin/nodemon --ignore public/",
     "knex": "./node_modules/.bin/knex"
   },
@@ -25,11 +25,12 @@
     "node-sass-middleware": "^0.9.8",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "pg": "^6.0.2"
+    "pg": "^6.0.2",
     "sqlite3": "^3.1.4",
-    "crypto-cookie": "^0.4.1"
+    "crypto-cookie": "^0.4.1",
+    "sqlite3": "^3.1.4"
   },
   "devDependencies": {
-    "nodemon": "^1.9.2",
+    "nodemon": "^1.9.2"
   }
 }
