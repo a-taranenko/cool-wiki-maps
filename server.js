@@ -20,7 +20,7 @@ const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 
 const mapRoutes = require("./routes/map-list");
-const markersRoutes = require("./routes/markers");
+const collectionsRoutes = require("./routes/collections");
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -45,7 +45,7 @@ app.use(cookieParser())
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
-app.use("/api/markers", markersRoutes(knex));
+app.use("/api/collections", collectionsRoutes(knex));
 app.use("/login", loginRoutes(knex));
 app.use("/maps", mapRoutes(knex));
 

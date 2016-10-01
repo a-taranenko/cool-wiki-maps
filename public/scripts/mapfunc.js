@@ -14,7 +14,7 @@ function initMap() {
   });
 
   $.ajax({
-    url: '/api/markers',
+    url: '/api/collections/search?name=test',
     method: 'GET',
     dataType: 'json',
     // data: locations,
