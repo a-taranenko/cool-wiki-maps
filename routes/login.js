@@ -1,13 +1,13 @@
 "use strict";
 
-const express = require('express');
-const router  = express.Router();
-const bodyParser = require('body-parser');
-const app         = express();
-const CryptoCookie = require('crypto-cookie');
-const crypto = require('crypto');
-const randNumGen = require('../saltGen');
-const hasher = require('../hasher');
+const express      = require('express');
+const router       = express.Router();
+const bodyParser   = require('body-parser');
+const app          = express();
+const cookieparser = require('cookie-parser')
+const crypto       = require('crypto');
+const randNumGen   = require('../saltGen');
+const hasher       = require('../hasher');
 
 app.use(bodyParser.json());
 
@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
-    //let cookie = new CryptoCookie(req, res);
     let body = req.body;
     //console.log(body);
     knex
@@ -57,16 +56,49 @@ module.exports = (knex) => {
     })
   });
 
-  router.get('/:id',(req, res) => {
-    knex
-      .select('*')
-      .from('users')
-      .where({
-        id: req.params.id
+  router.post("/register", (req, res) => {
+    let body = req.body;
+    let uid = Math.floor(Math.random()*10e5);
+    let newPassword = hasher(body.password)
+    let newUserData = {
+      id: undefined,
+      name: body.name,
+      username: body.username,
+      password: newPassword,
+      email: body.email,
+      uid: uid,
+    }
+
+    knex('users')
+    .insert([newUserData], 'id')
+    .then((results) => {
+      let randID = randNumGen(36);
+      let user = results[0]
+      console.log(uid);
+      knex('users').where({uid: uid})
+      .update({session_id: randID})
+      .then((count) =>{
+        console.log("Inserted", count, " sessionID");
+        res.cookie('sessionID', randID)
+        res.cookie('username', body.username)
+        res.redirect('/')
       })
-      .then((results) => {
-        res.json(results);
-      });
-  });
+      .catch((error) => {
+        console.log("Error updating sessionID", error)
+        res.render("oops", {errorMessage: error})
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+      res.render("oops", {errorMessage: error})
+    })
+  })
+
+  router.get("/logout", (req, res) => {
+    res.clearCookie('sessionID');
+    res.clearCookie('username');
+    res.redirect('/');
+  })
+
   return router;
 }
