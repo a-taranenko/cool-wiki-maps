@@ -5,24 +5,32 @@
 
   // 1 create variable that is our "MAP"(saved set of points) of which is an array of objects that we iterate through to place a marker at various locations.
 var toBeAdded = []
-var locations = $.ajax({
+var markers = [];
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 43.6561, lng: -79.3802},
+    zoom: 15
+  });
+
+  $.ajax({
     url: '/api/markers',
     method: 'GET',
     dataType: 'json',
     // data: locations,
     success: function(res) {
-      initMap(res["0"].markers)
+      res["0"].markers.forEach(function (m) {
+        markers.push(placeMarker(new google.maps.LatLng(m.latitude, m.longitude), map));
+      });
+      // initMap(res["0"].markers)
+      pullMarkerInfo(res["0"].markers)
     }
-});
-function initMap(setOfMarkers) {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 43.6561, lng: -79.3802},
-    zoom: 15
   });
+
   map.addListener('dblclick', function(e) {
     // on double click call the placeMarkerAndPanTo function with e.latLng and map as arguments
     console.log(e.latLng)
-    placeMarker(e.latLng, map);
+    markers.push(placeMarker(e.latLng, map));
     clickLoc = {
       // clickLoc = location of click. here we take the lng and lat of the click and make it into an object
       latitude: e.latLng.lat(),
@@ -31,10 +39,12 @@ function initMap(setOfMarkers) {
     // here we push that object into an array objects that have unaliased locations. The user then has to give it a name and once that happens we push that into our 'MAP' or Set of points
     toBeAdded.push(clickLoc)
     console.log(toBeAdded)
+
+    // I think this is where the form creation function should be implemented
+    createEntryField(toBeAdded.length, e.latLng.lat(), e.latLng.lng());
   });
   var infowindow = new google.maps.InfoWindow();
   var service = new google.maps.places.PlacesService(map);
-  var marker, i;
   var input = document.getElementById('pac-input');
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
@@ -43,13 +53,6 @@ function initMap(setOfMarkers) {
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   var infowindow = new google.maps.InfoWindow();
-  for (i = 0; i < setOfMarkers.length; i++) {
-    placeMarker(new google.maps.LatLng(setOfMarkers[i].latitude, setOfMarkers[i].longitude), map)
-    // marker = new google.maps.Marker({
-    //   position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
-    //   map: map
-    // });
-  };
 
   autocomplete.addListener('place_changed', function(e) {
     infowindow.close();
@@ -64,16 +67,21 @@ function initMap(setOfMarkers) {
       map.setCenter(place.geometry.location);
       map.setZoom(17);
     }
-    placeMarker(place.geometry.location, map)
+    markers.push(placeMarker(place.geometry.location, map));
+
     var searchLoc = {
       latitude:  place.geometry.location.lat(),
       longitude: place.geometry.location.lng()
     }
     toBeAdded.push(searchLoc);
     console.log(toBeAdded)
-    marker.setVisible(true);
+    markers.forEach(function (m) {
+      m.setVisible(true);
+    });
   // iterate through our locations and plot them on the map
 
+    // I think this is where the form creation function should be implemented
+    createEntryField(toBeAdded.length, place.geometry.location.lat(), place.geometry.location.lng());
   })
 }
 function placeMarker(latLng, map) {
@@ -91,9 +99,53 @@ function placeMarker(latLng, map) {
       console.log(results)
     })
   })
+
+  return marker;
 }
 
+// 2 functions that add a card (markers) on the left
+function pullMarkerInfo(markers) {
+  $(".well").empty();
 
+  $(".well").append( $(`<p>Markers</p>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+      </tr>`) );
+
+  markers.forEach((element) => {
+    $(".well").append(createRow(element));
+  });
+
+  $(".well").append( $(`</table>`) );
+}
+
+function createRow(markerObject) {
+  let $feed = $(`<tr>
+      <td>${markerObject.name}</td>
+      <td>${markerObject.description}</td>
+      <td>${markerObject.latitude}</td>
+      <td>${markerObject.longitude}</td>
+    </tr>`);
+
+  return $feed;
+}
+
+// a function that would add a card (text entry) on the left of the web page
+function createEntryField(counter, latitude, longitude) {
+  $(".left-container").append( $(`<form id="${counter}" data-latitude="${latitude}" data-longitude="${longitude}">
+      <label>${counter} Title:</label>
+      <textarea name="text"></textarea>
+      <label>Description:</label>
+      <textarea name="text"></textarea>
+      <input type="submit" value="ADD">
+    </form>`) );
+}
+
+// $(document).ready(loadTweets);
 
 // ChIJpTvG15DL1IkRd8S0KlBVNTI
 // ChIJpTvG15DL1IkRd8S0KlBVNTI
