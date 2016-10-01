@@ -11,7 +11,7 @@ module.exports = (knex) => {
       .from("users")
       .then((results) => {
         res.json(results);
-    });
+      });
   });
 
   router.get('/:id',(req, res) => {
