@@ -93,9 +93,6 @@ function placeMarker(latLng, map) {
   })
 }
 
-document.getElementById("addButton").eventListener("click", function() {
-
-})
 
 
 // ChIJpTvG15DL1IkRd8S0KlBVNTI
