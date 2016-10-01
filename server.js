@@ -9,7 +9,7 @@ const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
 const cookieParser= require('cookie-parser');
-
+const querystring = require('querystring');
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
@@ -20,8 +20,10 @@ const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 
 const mapRoutes = require("./routes/map-list");
-const markersRoutes = require("./routes/markers");
 
+// const markersRoutes = require("./routes/markers");
+
+const collectionsRoutes = require("./routes/collections");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -45,7 +47,8 @@ app.use(cookieParser())
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
-app.use("/api/markers", markersRoutes(knex));
+
+app.use("/api/collections", collectionsRoutes(knex));
 app.use("/login", loginRoutes(knex));
 app.use("/maps", mapRoutes(knex));
 
@@ -74,6 +77,19 @@ app.get("/maps", (req, res) => {
   let templateVars = { maps: res.locals.allMaps };
   console.log(res.locals.allMaps);
   res.render("maps", templateVars);
+});
+
+app.post("/api/collections/:id", (req, res) => {
+  console.log(req.params.body)
+  let updateData = querystring.parse(req.params.body)
+
+  // knex("collections").where("id", 1)
+  //   .update({markers: })
+
+  //   .then((results) => {
+  //     res.json(results);
+  // });
+  //res.redirect("/");
 });
 
 app.listen(PORT, () => {
