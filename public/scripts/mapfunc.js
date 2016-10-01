@@ -136,13 +136,31 @@ function createRow(markerObject) {
 
 // a function that would add a card (text entry) on the left of the web page
 function createEntryField(counter, latitude, longitude) {
-  $(".left-container").append( $(`<form id="${counter}" data-latitude="${latitude}" data-longitude="${longitude}">
+  $(".left-container").append( $(`
+    <form id="${counter}" data-latitude="" data-longitude="" method="POST">
       <label>${counter} Title:</label>
-      <textarea name="text"></textarea>
+      <input type="text" name="title"></input>
       <label>Description:</label>
-      <textarea name="text"></textarea>
+      <input type="text" name="desc"></input>
+      <input type="hidden" name="lat" value="${latitude}">
+      <input type="hidden" name="long" value="${longitude}">
       <input type="submit" value="ADD">
     </form>`) );
+
+  $("form").submit(postMarkerInfo);
+}
+
+function postMarkerInfo(e) {
+  e.preventDefault();
+  console.log($( this ).serialize());
+  $.ajax({
+    url: '/api/collections/add',
+    method: 'POST',
+    data: $(this).serialize(),
+    success: function (morePostsHtml) {
+      console.log('Success!');
+    }
+  });
 }
 
 // $(document).ready(loadTweets);
