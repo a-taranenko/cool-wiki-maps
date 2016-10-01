@@ -8,6 +8,7 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const cookieParser= require('cookie-parser');
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -17,8 +18,10 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
+
 const mapRoutes = require("./routes/map-list");
 const markersRoutes = require("./routes/markers");
+
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -37,6 +40,8 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap-validator/dist'));
+app.use(cookieParser())
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
@@ -46,7 +51,7 @@ app.use("/maps", mapRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {username: req.cookies.username});
 });
 
 // Login page
@@ -54,16 +59,16 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.post("/login", (req, res) => {
-  res.cookie("username", req.body.username, { maxAge: 900000, httpOnly: true });
-  res.redirect("/");
-});
-
 //logout
-app.post("/logout", (req, res) => {
-  res.clearCookie("username");
-  res.redirect("/");
-});
+// app.post("/logout", (req, res) => {
+//   res.clearCookie("username");
+//   res.redirect("/");
+// });
+
+//error page
+// app.get("/oops", (req, res) => {
+//   res.render("oops", {'error': req.body.error})
+// })
 
 app.get("/maps", (req, res) => {
   let templateVars = { maps: res.locals.allMaps };
