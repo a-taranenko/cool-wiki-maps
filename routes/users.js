@@ -30,16 +30,28 @@ module.exports = (knex) => {
     })
   });
 
-  router.get('/:id',(req, res) => {
+  router.get('/all',(req, res) => {
     knex
-      .select('username')
+      .select('username', 'name', 'email', 'uid')
       .from('users')
-      .where({
-        username: req.params.id
-      })
       .then((results) => {
+        console.log(JSON.stringify(results))
         res.json(results);
+        //res.render('allusers', {allUsers: JSON.stringify(results)});
       });
   });
+
+  router.get(('/:username'), (req, res) => {
+    // SELECT users.name, username, email, collections.name, collections.desc FROM users JOIN collections ON (uid = owner_id) WHERE username = 'mrtesty';
+    knex('users')
+      .leftJoin('collections', 'users.uid', '=', 'collections.owner_id')
+      .select('users.name', 'users.username', 'users.email', 'collections.collection_name', 'collections.desc')
+      .where('users.username', req.params.username)
+      .then((results) => {
+        res.json(results);
+        //res.render('profile', {results: JSON.stringify(results)});
+      });
+  });
+
   return router;
 }
