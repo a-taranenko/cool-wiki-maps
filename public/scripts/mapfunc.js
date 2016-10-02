@@ -142,6 +142,8 @@ function createEntryField(counter, latitude, longitude) {
       <input type="text" name="title"></input>
       <label>Description:</label>
       <input type="text" name="desc"></input>
+      <label>Imageurl:</label>
+      <input type="text" name="image"></input>
       <input type="hidden" name="lat" value="${latitude}">
       <input type="hidden" name="long" value="${longitude}">
       <input type="submit" value="ADD">
