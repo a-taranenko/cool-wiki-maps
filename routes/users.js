@@ -36,8 +36,8 @@ module.exports = (knex) => {
       .from('users')
       .then((results) => {
         console.log(JSON.stringify(results))
-        res.json(results);
-        //res.render('allusers', {allUsers: JSON.stringify(results)});
+        //res.json(results);
+        res.render('allusers', {allUsers: JSON.stringify(results)});
       });
   });
 
@@ -48,8 +48,8 @@ module.exports = (knex) => {
       .select('users.name', 'users.username', 'users.email', 'collections.collection_name', 'collections.desc')
       .where('users.username', req.params.username)
       .then((results) => {
-        res.json(results);
-        //res.render('profile', {results: JSON.stringify(results)});
+        //res.json(results);
+        res.render('profile', {results: JSON.stringify(results)});
       });
   });
 

@@ -20,7 +20,6 @@ const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
 const mapRoutes = require("./routes/map-list");
 
-// const markersRoutes = require("./routes/markers");
 
 const collectionsRoutes = require("./routes/collections");
 
