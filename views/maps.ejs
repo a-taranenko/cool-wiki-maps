@@ -1,31 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src=""></script>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="   sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="   sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="   sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+    <!-- Inline CSS based on choices in "Settings" tab -->
+    <style>
+      .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
+        font-family: Arial, Helvetica, sans-serif; color: black
+        }
+
+      .bootstrap-iso form button, .bootstrap-iso form button:hover {
+        color: white !important;
+        }
+
+      .asteriskField {
+        color: red;
+        }
+    </style>
+
+    <style type="text/css">
+      .table-fixed thead {
+        width: 97%;
+      }
+
+      .table-fixed tbody {
+        height: 230px;
+        overflow-y: auto;
+        width: 100%;
+      }
+
+      .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+        display: block;
+      }
+
+      .table-fixed tbody td, .table-fixed thead > tr> th {
+        float: left;
+        border-bottom-width: 0;
+      }
+    </style>
   </head>
 
   <body>
 
-    <h1>Existing Collections</h1>
+    <div class="container">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            Existing Maps
+          </h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-2">Map ID</th>
+              <th class="col-xs-2">Owner ID</th>
+              <th class="col-xs-2">Map Name</th>
+              <th class="col-xs-4">Map Description</th>
+              <th class="col-xs-2"></th>
+            </tr>
+          </thead>
 
-    <table>
-      <tr>
-        <th>Map ID</th>
-        <th>Owner ID</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
+          <tbody>
+            <% for (var key in maps) { %>
+            <tr>
+              <td class="col-xs-2"><%= maps[key].cid %></td>
+              <td class="col-xs-2"><%= maps[key].owner_id %></td>
+              <td class="col-xs-2"><%= maps[key].collection_name %></td>
+              <td class="col-xs-4"><%= maps[key].desc %></td>
+              <td class="col-xs-2"><a href="/<%= maps[key].cid %>"><button>View</button></a></td>
+            </tr>
 
-      <% for (var key in maps) { %>
-      <tr>
-        <td><%= maps[key].id %></td>
-        <td><%= maps[key].owner_id %></td>
-        <td><%= maps[key].name %></td>
-        <td><%= maps[key].desc %></td>
-      </tr>
-      <% } %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
 
-    </table>
+    <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+    <div class="container bootstrap-iso">
+     <div class="container-fluid">
+      <div class="row">
+       <div class="col-md-6 col-sm-6 col-xs-12">
+        <form method="POST" action="/maps/addnew">
+         <div class="form-group ">
+          <label class="control-label " for="name">
+           New Map Name
+          </label>
+          <input class="form-control" id="name" name="name" type="text"/>
+         </div>
+         <div class="form-group ">
+          <label class="control-label " for="subject">
+           Map Description
+          </label>
+          <input class="form-control" id="subject" name="subject" type="text"/>
+         </div>
+         <div class="form-group">
+          <div>
+           <button class="btn btn-primary " name="submit" type="submit">
+            Create New Map
+           </button>
+          </div>
+         </div>
+        </form>
+       </div>
+      </div>
+     </div>
+    </div>
 
   </body>
 </html>
