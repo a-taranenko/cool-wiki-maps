@@ -142,6 +142,8 @@ function createEntryField(counter, latitude, longitude) {
       <input type="text" name="title"></input>
       <label>Description:</label>
       <input type="text" name="desc"></input>
+      <label>Image URL:</label>
+      <input type="text" name="image"></input>
       <input type="hidden" name="lat" value="${latitude}">
       <input type="hidden" name="long" value="${longitude}">
       <input type="submit" value="ADD">
@@ -154,12 +156,10 @@ function postMarkerInfo(e) {
   e.preventDefault();
   console.log($( this ).serialize());
   $.ajax({
-    url: '/api/collections/add',
+    url: '/api/collections/add/1',
     method: 'POST',
     data: $(this).serialize(),
-    success: function (morePostsHtml) {
-      console.log('Success!');
-    }
+    success: $( this ).remove()
   });
 }
 

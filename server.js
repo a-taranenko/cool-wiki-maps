@@ -79,18 +79,18 @@ app.get("/maps", (req, res) => {
   res.render("maps", templateVars);
 });
 
-app.post("/api/collections/:id", (req, res) => {
-  console.log(req.params.body)
-  let updateData = querystring.parse(req.params.body)
+// app.post("/api/collections/:id", (req, res) => {
+//   console.log(req.params.body)
+//   let updateData = querystring.parse(req.params.body)
 
-  // knex("collections").where("id", 1)
-  //   .update({markers: })
+//   // knex("collections").where("id", 1)
+//   //   .update({markers: })
 
-  //   .then((results) => {
-  //     res.json(results);
-  // });
-  //res.redirect("/");
-});
+//   //   .then((results) => {
+//   //     res.json(results);
+//   // });
+//   //res.redirect("/");
+// });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

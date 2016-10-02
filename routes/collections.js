@@ -18,12 +18,30 @@ module.exports = (knex) => {
     });
   });
 
-  router.post("/add", (req, res) => {
+  router.post("/add/:cid", (req, res) => {
     let body = JSON.stringify(req.body);
     console.log("Heres your shit asshole:")
     console.log(body)
-    //let updateData = querystring.parse(req.body)
+    let stickItInThere = {
+      id: undefined,
+      cid: req.params.cid,
+      marker: body
+    }
+    knex('markers').insert([stickItInThere], 'id').then((count) => {console.log("added", count, "marker")})
+    .catch((error) => {
+      res.render("oops", {errorMessage: error})
+    })
   })
+
+  router.get("/add/:cid", (req, res) => {
+    knex
+      .select("marker")
+      .from("markers")
+      .where("cid", 1)
+      .then((results) => {
+        res.json(results);
+      });
+  });
 
   return router;
 }
