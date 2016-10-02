@@ -66,9 +66,7 @@ app.use(function(req, res, next) {
 // Mount all resource routes
 app.use("/login", loginRoutes(knex));
 app.use("/api/users", usersRoutes(knex));
-
 app.use("/api/collections", collectionsRoutes(knex));
-app.use("/login", loginRoutes(knex));
 app.use("/maps", mapRoutes(knex));
 
 // Home page
@@ -77,9 +75,7 @@ app.get("/", (req, res) => {
 });
 
 //Login page
-app.get("/login", (req, res) => {
-  res.render("login");
-});
+
 
 //logout
 // app.post("/logout", (req, res) => {
