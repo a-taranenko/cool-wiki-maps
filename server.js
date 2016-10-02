@@ -76,9 +76,9 @@ app.get("/", (req, res) => {
 });
 
 // Login page
-// app.get("/login", (req, res) => {
-//   res.render("login");
-// });
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 
 //logout
 // app.post("/logout", (req, res) => {
@@ -92,7 +92,7 @@ app.get("/", (req, res) => {
 // })
 
 app.get("/maps", (req, res) => {
-  let templateVars = { maps: res.locals.allMaps };
+  let templateVars = { maps: res.locals.allMaps, user_id: req.wikimap.login };
   console.log(res.locals.allMaps);
   res.render("maps", templateVars);
 });

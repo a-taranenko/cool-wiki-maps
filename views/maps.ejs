@@ -91,22 +91,24 @@
     </div>
 
     <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+    <% if (user_id) {%>
     <div class="container bootstrap-iso">
      <div class="container-fluid">
       <div class="row">
        <div class="col-md-6 col-sm-6 col-xs-12">
-        <form method="POST" action="/addcollection">
-         <div class="form-group ">
-          <label class="control-label " for="name">
+        <form method="POST" action="/api/collections/addcollection">
+         <div class="form-group">
+          <label class="control-label" for="name">
            New Map Name
           </label>
           <input class="form-control" id="name" name="name" type="text"/>
          </div>
-         <div class="form-group ">
+         <div class="form-group">
           <label class="control-label " for="subject">
            Map Description
           </label>
-          <input class="form-control" id="subject" name="subject" type="text"/>
+          <input class="form-control" id="subject" name="desc" type="text"/>
+          <input type="hidden" name="oid" value="<%= user_id %>">
          </div>
          <div class="form-group">
           <div>
@@ -120,6 +122,6 @@
       </div>
      </div>
     </div>
-
+    <% } %>
   </body>
 </html>

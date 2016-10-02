@@ -24,8 +24,9 @@ module.exports = (knex) => {
     console.log(body)
     let stickItInThere = {
       id: undefined,
+      owner_id: body.oid,
       cid: Math.floor(Math.random()*10e5),
-      name: body.name
+      collection_name: body.name,
       desc: body.desc
     }
     knex('collections').insert([stickItInThere], 'id').then((count) => {console.log("added collection #", count)})
