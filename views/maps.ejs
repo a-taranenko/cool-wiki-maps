@@ -83,7 +83,6 @@
               <td class="col-xs-4"><%= maps[key].desc %></td>
               <td class="col-xs-2"><a href="/<%= maps[key].cid %>"><button>View</button></a></td>
             </tr>
-
             <% } %>
           </tbody>
         </table>
@@ -96,7 +95,7 @@
      <div class="container-fluid">
       <div class="row">
        <div class="col-md-6 col-sm-6 col-xs-12">
-        <form method="POST" action="/maps/addnew">
+        <form method="POST" action="/addcollection">
          <div class="form-group ">
           <label class="control-label " for="name">
            New Map Name
