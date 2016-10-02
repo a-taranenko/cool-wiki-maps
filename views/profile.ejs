@@ -87,6 +87,7 @@ $(document).ready(function() {
   <title></title>
 </head>
 <body>
+<%= results %>
 <div class="container">
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
@@ -101,7 +102,7 @@ $(document).ready(function() {
 
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">Sheena Kristin A.Eschor</h3>
+              <h3 class="panel-title"><%= results[0].username %></h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -133,17 +134,6 @@ $(document).ready(function() {
                       <tr>
                         <td>Date of Birth</td>
                         <td>01/24/1988</td>
-                      </tr>
-
-                         <tr>
-                             <tr>
-                        <td>Gender</td>
-                        <td>Male</td>
-                      </tr>
-                        <tr>
-                        <td>Home Address</td>
-                        <td>Metro Manila,Philippines</td>
-                      </tr>
                       <tr>
                         <td>Email</td>
                         <td><a href="mailto:info@support.com">info@support.com</a></td>

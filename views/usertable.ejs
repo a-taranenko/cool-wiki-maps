@@ -26,18 +26,7 @@
       border-bottom-width: 0;
     }
   </style>
-  <script>
-    function createTableElement(cv) {
-      var $entry = $(
-                `<tr>
-                  <td class="col-xs-2">1</td><td class="col-xs-2">${cv[name]}</td><td
-                    class="col-xs-2">${cv[username]}</td><td class="col-xs-6">${cv[email]}</td>
-                </tr>`
-                  );
-      $("tbody").append($entry)
-    }
-  allUsers.foreach(appendcreateTableElement())
-  </script>
+
 </head>
   <body>
     <div class="container">
@@ -45,7 +34,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4>
-                Fixed Header Scrolling Table
+                ALL USERS
               </h4>
             </div>
             <table class="table table-fixed">
@@ -54,14 +43,26 @@
                   <th class="col-xs-2">#</th><th class="col-xs-2">Name</th><th class="col-xs-2">Username</th><th class="col-xs-6">Email</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td class="col-xs-2">1</td><td class="col-xs-2">Mike Adams</td><td class="col-xs-2">altecon</td><td class="col-xs-6">Email.email@email.com</td>
-                </tr>
+              <tbody class="usersTable">
+                <!-- ROWS GO HERE -->
               </tbody>
             </table>
           </div>
       </div>
     </div>
+<script>
+    var allUsers = <%- allUsers%>
+  allUsers.forEach(function(cv, index) {
+    console.log(cv.name)
+    var entry = (
+              `<tr>
+                <td class="col-xs-2">${index + 1}</td><td class="col-xs-2">${cv.name}</td><td
+                  class="col-xs-2">${cv.username}</td><td class="col-xs-6">${cv.email}</td>
+              </tr>`
+                );
+    console.log(entry)
+    $(".usersTable").append(entry)
+  })
+</script>
   </body>
 </html>

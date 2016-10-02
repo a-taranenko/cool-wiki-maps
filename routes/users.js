@@ -37,7 +37,8 @@ module.exports = (knex) => {
       .then((results) => {
         console.log(JSON.stringify(results))
         //res.json(results);
-        res.render('allusers', {allUsers: JSON.stringify(results)});
+        //res.locals.allUsers = JSON.stringify(results);
+        res.render('usertable', {allUsers: JSON.stringify(results)});
       });
   });
 
@@ -49,7 +50,8 @@ module.exports = (knex) => {
       .where('users.username', req.params.username)
       .then((results) => {
         //res.json(results);
-        res.render('profile', {results: JSON.stringify(results)});
+        res.locals.user = JSON.stringify(results);
+        res.render('profile');
       });
   });
 

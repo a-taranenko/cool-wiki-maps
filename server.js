@@ -29,6 +29,9 @@ function sessionCheck(req, cb) {
     .then((response) => {
       cb (null, response.rows[0].exists)
   })
+    .catch((error) => {
+      cb (null, false)
+    })
 }
 
 
