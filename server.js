@@ -25,9 +25,10 @@ const collectionsRoutes = require("./routes/collections");
 
 function sessionCheck(req, cb) {
   let sessionID = req.cookies.sessionID
-  knex.raw('SELECT EXISTS (SELECT 1 FROM users WHERE session_id=?);', sessionID)
+  knex.raw('SELECT username, uid FROM users WHERE session_id=?;', sessionID)
     .then((response) => {
-      cb (null, response.rows[0].exists)
+      console.log("Page requested by user:", response.rows[0])
+      cb (null, response.rows[0])
   })
     .catch((error) => {
       cb (null, false)
@@ -65,9 +66,7 @@ app.use(function(req, res, next) {
 // Mount all resource routes
 app.use("/login", loginRoutes(knex));
 app.use("/api/users", usersRoutes(knex));
-
 app.use("/api/collections", collectionsRoutes(knex));
-app.use("/login", loginRoutes(knex));
 app.use("/maps", mapRoutes(knex));
 
 // Home page
@@ -79,6 +78,7 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
+//Login page
 
 //logout
 // app.post("/logout", (req, res) => {

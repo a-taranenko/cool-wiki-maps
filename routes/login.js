@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 
 module.exports = (knex) => {
 
+  router.get("/", (req, res) => {
+  res.render("login");
+  });
+
   router.post("/", (req, res) => {
     let body = req.body;
     //console.log(body);

@@ -29,7 +29,9 @@ module.exports = (knex) => {
       collection_name: body.name,
       desc: body.desc
     }
-    knex('collections').insert([stickItInThere], 'id').then((count) => {console.log("added collection #", count)})
+    knex('collections').insert([stickItInThere], 'id')
+    .then((count) => {
+      console.log("added collection #", count)})
     .catch((error) => {
       res.render("oops", {errorMessage: error})
     })
