@@ -74,8 +74,11 @@ app.get("/", (req, res) => {
   res.render("index", {username: req.cookies.username, login: req.wikimap.login});
 });
 
+// Login page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 //Login page
-
 
 //logout
 // app.post("/logout", (req, res) => {
@@ -89,7 +92,7 @@ app.get("/", (req, res) => {
 // })
 
 app.get("/maps", (req, res) => {
-  let templateVars = { maps: res.locals.allMaps };
+  let templateVars = { maps: res.locals.allMaps, user_id: req.wikimap.login };
   console.log(res.locals.allMaps);
   res.render("maps", templateVars);
 });
