@@ -6,6 +6,8 @@
   // 1 create variable that is our "MAP"(saved set of points) of which is an array of objects that we iterate through to place a marker at various locations.
 var toBeAdded = []
 var markers = [];
+var cid = <%- cid%>
+
 
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -14,7 +16,7 @@ function initMap() {
   });
 
   $.ajax({
-    url: '/api/collections/search?name=test',
+    url: `/api/collections/${cid}`,
     method: 'GET',
     dataType: 'json',
     // data: locations,
