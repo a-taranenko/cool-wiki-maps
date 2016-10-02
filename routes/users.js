@@ -50,8 +50,7 @@ module.exports = (knex) => {
       .where('users.username', req.params.username)
       .then((results) => {
         //res.json(results);
-        res.locals.user = JSON.stringify(results);
-        res.render('profile');
+        res.render('profile', {userInfo: JSON.stringify(results)});
       });
   });
 

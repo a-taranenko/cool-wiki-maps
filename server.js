@@ -25,9 +25,10 @@ const collectionsRoutes = require("./routes/collections");
 
 function sessionCheck(req, cb) {
   let sessionID = req.cookies.sessionID
-  knex.raw('SELECT EXISTS (SELECT 1 FROM users WHERE session_id=?);', sessionID)
+  knex.raw('SELECT username, uid FROM users WHERE session_id=?;', sessionID)
     .then((response) => {
-      cb (null, response.rows[0].exists)
+      console.log("Page requested by user:", response.rows[0])
+      cb (null, response.rows[0])
   })
     .catch((error) => {
       cb (null, false)
@@ -75,10 +76,10 @@ app.get("/", (req, res) => {
   res.render("index", {username: req.cookies.username, login: req.wikimap.login});
 });
 
-// Login page
-// app.get("/login", (req, res) => {
-//   res.render("login");
-// });
+//Login page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
 
 //logout
 // app.post("/logout", (req, res) => {
