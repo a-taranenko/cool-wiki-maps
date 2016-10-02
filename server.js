@@ -25,6 +25,15 @@ const mapRoutes = require("./routes/map-list");
 
 const collectionsRoutes = require("./routes/collections");
 
+function sessionCheck(req, cb) {
+  let sessionID = req.cookies.sessionID
+  knex.raw('SELECT EXISTS (SELECT 1 FROM users WHERE session_id=?);', sessionID)
+    .then((response) => {
+      cb (null, response.rows[0].exists)
+  })
+}
+
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -44,23 +53,32 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap-validator/dist'));
 app.use(cookieParser())
+app.use(function(req, res, next) {
+  if (!req["wikimap"]) req.wikimap = {}
+  sessionCheck(req, (err, loggedin)=> {
+    req.wikimap.login = loggedin
+    next();
+  })
+})
 
 // Mount all resource routes
+app.use("/login", loginRoutes(knex));
 app.use("/api/users", usersRoutes(knex));
 
 app.use("/api/collections", collectionsRoutes(knex));
 app.use("/login", loginRoutes(knex));
+app.use("/api/markers", markersRoutes(knex));
 app.use("/maps", mapRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index", {username: req.cookies.username});
+  res.render("index", {username: req.cookies.username, login: req.wikimap.login});
 });
 
 // Login page
-app.get("/login", (req, res) => {
-  res.render("login");
-});
+// app.get("/login", (req, res) => {
+//   res.render("login");
+// });
 
 //logout
 // app.post("/logout", (req, res) => {
