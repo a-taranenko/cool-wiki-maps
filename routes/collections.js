@@ -18,30 +18,46 @@ module.exports = (knex) => {
     });
   });
 
-  router.post("/add/:cid", (req, res) => {
+  router.post("/addcollection", (req, res) => {
+    let body = req.body;
+    console.log("Add Collection!")
+    console.log(body)
+    let stickItInThere = {
+      id: undefined,
+      cid: Math.floor(Math.random()*10e5),
+      name: body.name
+      desc: body.desc
+    }
+    knex('collections').insert([stickItInThere], 'id').then((count) => {console.log("added collection #", count)})
+    .catch((error) => {
+      res.render("oops", {errorMessage: error})
+    })
+  })
+
+  router.post("/addmarker/:cid", (req, res) => {
     let body = JSON.stringify(req.body);
-    console.log("Heres your shit asshole:")
+    console.log("Add Marker!")
     console.log(body)
     let stickItInThere = {
       id: undefined,
       cid: req.params.cid,
       marker: body
     }
-    knex('markers').insert([stickItInThere], 'id').then((count) => {console.log("added", count, "marker")})
+    knex('markers').insert([stickItInThere], 'id').then((count) => {console.log("added marker #", count)})
     .catch((error) => {
       res.render("oops", {errorMessage: error})
     })
   })
 
-  router.get("/add/:cid", (req, res) => {
-    knex
-      .select("marker")
-      .from("markers")
-      .where("cid", 1)
-      .then((results) => {
-        res.json(results);
-      });
-  });
+  // router.get("/add/:cid", (req, res) => {
+  //   knex
+  //     .select("marker")
+  //     .from("markers")
+  //     .where("cid", 1)
+  //     .then((results) => {
+  //       res.json(results);
+  //     });
+  // });
 
   return router;
 }
