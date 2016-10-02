@@ -18,7 +18,6 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const loginRoutes = require("./routes/login");
-
 const mapRoutes = require("./routes/map-list");
 
 // const markersRoutes = require("./routes/markers");
@@ -67,7 +66,6 @@ app.use("/api/users", usersRoutes(knex));
 
 app.use("/api/collections", collectionsRoutes(knex));
 app.use("/login", loginRoutes(knex));
-app.use("/api/markers", markersRoutes(knex));
 app.use("/maps", mapRoutes(knex));
 
 // Home page
