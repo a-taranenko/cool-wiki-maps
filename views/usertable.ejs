@@ -57,7 +57,7 @@
     var entry = (
               `<tr>
                 <td class="col-xs-2">${index + 1}</td><td class="col-xs-2">${cv.name}</td><td
-                  class="col-xs-2">${cv.username}</td><td class="col-xs-6">${cv.email}</td>
+                  class="col-xs-2">${cv.username}</td><td class="col-xs-5">${cv.email}</td><td class="col-xs-1"><button onclick="location.href = '/api/users/${cv.username}';" id="myButton">View</button></td>
               </tr>`
                 );
     console.log(entry)
