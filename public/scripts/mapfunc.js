@@ -147,17 +147,36 @@ function createRow(markerObject) {
 function createEntryField(counter, latitude, longitude) {
   console.log("WORKS")
   $(".left-container").append( $(`
-    <form id="${counter}" data-latitude="" data-longitude="" method="POST">
-      <label>${counter} Title:</label>
-      <input type="text" name="title"></input>
-      <label>Description:</label>
-      <input type="text" name="desc"></input>
-      <label>Image URL:</label>
-      <input type="text" name="image"></input>
-      <input type="hidden" name="lat" value="${latitude}">
-      <input type="hidden" name="long" value="${longitude}">
-      <input type="submit" value="ADD">
-    </form>`) );
+
+      <div class="business-card" style=" width:100%; ">
+      <div class="media">
+      <div class="media-left">
+
+      </div>
+      <div class="media-body">
+          <form id="${counter}" data-latitude="" data-longitude="" method="POST">
+          <div>
+            <input type="text" class="form-control" name="title" placeholder="Title"></input>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="desc" placeholder="Description:"></input>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="image" placeholder="Image URL:"></input>
+          </div>
+          <div>
+            <input type="hidden" name="lat" value="${latitude}">
+            <input type="hidden" name="long" value="${longitude}">
+          </div>
+          <input class="btn btn-default" type="submit" value="ADD">
+          </form>
+      </div>
+      </div>
+      </div>
+
+
+
+    `) );
 
   $("form").submit(postMarkerInfo);
 }

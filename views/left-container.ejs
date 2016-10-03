@@ -1,0 +1,30 @@
+
+<script type="text/javascript">
+    $(document).on('click', '.panel-heading span.clickable-l', function(e){
+    var $this = $(this);
+    if(!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    }
+})
+
+
+</script>
+
+    <div class="container" style=" width: 450px; position: absolute; top: 100px; z-index: 1000; left: 10px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add Markers</h3>
+                    <span class="pull-right clickable-l"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+            <div class="panel-body" style="position:inherit; height: 600px; overflow: scroll;">
+                <div class="left-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
