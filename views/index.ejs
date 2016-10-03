@@ -25,30 +25,40 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="   sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </head>
+  <style type="text/css">
+      /*Business Card Css */
+.business-card {
+  border: 1px solid #cccccc;
+  background: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.profile-img {
+  height: 120px;
+  background: white;
+}
+.job {
+  color: #666666;
+  font-size: 17px;
+}
+.mail {
+  font-size: 16px;
+ }
+  </style>
 
   <body>
             <%- include('navbar'); %>
-    <div class='container-fluid height-100' style="padding-top: 51px;">
-        <div class="row height-100">
+
+    <div class='container-fluid height-100' style="padding-left:0; padding-right:0; padding-top: 51px;">
+        <div class="row height-100" style="margin-top: 0;">
             <div class="col-md-12 height-100" id="no-padding">
             <%- include('map'); %>
             </div>
         </div>
     </div>
 
-    <div class="left-container"></div>
+    <%- include('markers_list') %>
 
-    <div style="position: absolute; top: 100px; z-index: 1000; right: 10px;">
-        <div>
-            <div style="width: 100%">
-            <button class="btn btn-primary" type="button" data-toggle='collapse' data-target='#places-dropdown' aria-expanded="false" aria-controls="places-dropdown" style="width: 100%">HEY</button>
-            <div class="collapse" id="places-dropdown" style="position: absolute;">
-                <div class="well">
-                  <p>uyfwgiudwgbofuwbofeuwboufwbofweubofwubfowuvfowuvfowduvfoewuv</p>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
   </body>
 </html>

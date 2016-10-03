@@ -8,11 +8,11 @@ app.use(bodyParser.urlencoded({ extended: true, type: "*/*" }));
 
 module.exports = (knex) => {
 
-  router.get("/:query", (req, res) => {
+  router.get("/:cid", (req, res) => {
     knex
-      .select("markers")
-      .from("collections")
-      .where('name',req.query.name)
+      .select("marker")
+      .from("markers")
+      .where('cid', req.params.cid)
       .then((results) => {
         res.json(results);
     });
@@ -20,18 +20,20 @@ module.exports = (knex) => {
 
   router.post("/addcollection", (req, res) => {
     let body = req.body;
+    let cid = Math.floor(Math.random()*10e5)
     console.log("Add Collection!")
     console.log(body)
     let stickItInThere = {
       id: undefined,
-      owner_id: body.oid,
-      cid: Math.floor(Math.random()*10e5),
+      owner_id: body.uid,
+      cid: cid,
       collection_name: body.name,
       desc: body.desc
     }
     knex('collections').insert([stickItInThere], 'id')
     .then((count) => {
       console.log("added collection #", count)})
+      res.render('index', {username: req.cookies.username, login: req.wikimap.login, cid: cid})
     .catch((error) => {
       res.render("oops", {errorMessage: error})
     })

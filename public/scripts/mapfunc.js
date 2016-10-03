@@ -7,6 +7,9 @@
 var toBeAdded = []
 var markers = [];
 
+
+
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 43.6561, lng: -79.3802},
@@ -14,16 +17,18 @@ function initMap() {
   });
 
   $.ajax({
-    url: '/api/collections/search?name=test',
+    url: `/api/collections/1`,
     method: 'GET',
     dataType: 'json',
-    // data: locations,
+    //data: locations,
     success: function(res) {
-      res["0"].markers.forEach(function (m) {
-        markers.push(placeMarker(new google.maps.LatLng(m.latitude, m.longitude), map));
-      });
-      // initMap(res["0"].markers)
-      pullMarkerInfo(res["0"].markers)
+      var array = res
+      //console.log("THIS IS WHAT RES IS",array)
+      for (obj of array) {
+        //console.log(obj.marker)
+        markers.push(placeMarker(new google.maps.LatLng(obj.marker.lat, obj.marker.long), map))
+      }
+      pullMarkerInfo(res)
     }
   });
 
@@ -88,7 +93,8 @@ function placeMarker(latLng, map) {
   // this function sets a new marker location
   var marker = new google.maps.Marker({
     position: latLng,
-    map: map
+    map: map,
+    animation: google.maps.Animation.DROP
   });
   google.maps.event.addListener(marker, 'click', function() {
     var service = new google.maps.places.PlacesService(map);
@@ -116,20 +122,32 @@ function pullMarkerInfo(markers) {
         <th>Longitude</th>
       </tr>`) );
 
-  markers.forEach((element) => {
-    $(".well").append(createRow(element));
-  });
+  for (obj of markers) {
+    $(".well").append(createRow(obj.marker))
+    console.log(obj.marker)
+  }
 
   $(".well").append( $(`</table>`) );
 }
 
 function createRow(markerObject) {
-  let $feed = $(`<tr>
-      <td>${markerObject.name}</td>
-      <td>${markerObject.description}</td>
-      <td>${markerObject.latitude}</td>
-      <td>${markerObject.longitude}</td>
-    </tr>`);
+  let $feed = $(`
+      <div class="" style=" width:100%; ">
+      <div class="">
+      <div class="business-card">
+      <div class="media">
+      <div class="media-left">
+          <img class="media-object img-circle profile-img" src="https://s-media-cache-ak0.pinimg.com/originals/83/b8/2d/83b82d61a16f5129b13a4019669253f2.gif">
+      </div>
+      <div class="media-body">
+          <h2 class="media-heading">${markerObject.title}</h2>
+          <div class="job">${markerObject.desc}</div>
+          <div class="mail"><p>Lat:${markerObject.lat}</p><p>Lng:${markerObject.long}</p> </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>`);
 
   return $feed;
 }
