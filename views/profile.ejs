@@ -12,42 +12,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="   sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script type="text/javascript">
 var everything = <%- results %>
-$(document).ready(function() {
-  var panels = $('.user-infos');
-  var panelsButton = $('.dropdown-user');
-  panels.hide();
-
-  //Click dropdown
-  panelsButton.click(function() {
-      //get data-for attribute
-      var dataFor = $(this).attr('data-for');
-      var idFor = $(dataFor);
-
-      //current button
-      var currentButton = $(this);
-      idFor.slideToggle(400, function() {
-          //Completed slidetoggle
-          if(idFor.is(':visible'))
-          {
-              currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
-          }
-          else
-          {
-              currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
-          }
-      })
-  });
-
-
-  $('[data-toggle="tooltip"]').tooltip();
-
-    $('[data-toggle="tooltip"]').tooltip();
-
-  $('button').click(function(e) {
-      e.preventDefault();
-      alert("This is a demo.\n :-)");
-  });
-});
 </script>
 <style type="text/css">
   .user-row {
@@ -98,7 +62,7 @@ $(document).ready(function() {
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://lorempixel.com/300/300/people" class="img-circle img-responsive"> </div>
                 <div class=" col-md-9 col-lg-9 ">
                   <table class="table table-user-information">
                     <tbody>

@@ -7,7 +7,7 @@
 var toBeAdded = []
 var markers = [];
 
-
+var updateMarkers = undefined;
 
 
 function initMap() {
@@ -16,6 +16,7 @@ function initMap() {
     zoom: 15
   });
 
+  updateMarkers = function() {
   $.ajax({
     url: `/api/collections/` + cid,
     method: 'GET',
@@ -31,6 +32,10 @@ function initMap() {
       pullMarkerInfo(res)
     }
   });
+  }
+
+
+  updateMarkers()
 
   map.addListener('dblclick', function(e) {
     // on double click call the placeMarkerAndPanTo function with e.latLng and map as arguments
@@ -89,6 +94,8 @@ function initMap() {
     createEntryField(toBeAdded.length, place.geometry.location.lat(), place.geometry.location.lng());
   })
 }
+//end of initmap
+
 function placeMarker(latLng, map) {
   // this function sets a new marker location
   var marker = new google.maps.Marker({
@@ -128,7 +135,7 @@ function createRow(markerObject) {
       <div class="business-card">
       <div class="media">
       <div class="media-left">
-          <img class="media-object img-circle profile-img" src="https://s-media-cache-ak0.pinimg.com/originals/83/b8/2d/83b82d61a16f5129b13a4019669253f2.gif">
+          <img class="media-object img-circle profile-img" src="http://lorempixel.com/400/400/city">
       </div>
       <div class="media-body">
           <h2 class="media-heading">${markerObject.title}</h2>
@@ -145,7 +152,7 @@ function createRow(markerObject) {
 
 // a function that would add a card (text entry) on the left of the web page
 function createEntryField(counter, latitude, longitude) {
-  console.log("WORKS")
+  //console.log("WORKS")
   $(".left-container").append( $(`
 
       <div class="business-card" style=" width:100%; ">
@@ -154,7 +161,7 @@ function createEntryField(counter, latitude, longitude) {
 
       </div>
       <div class="media-body">
-          <form id="${counter}" data-latitude="" data-longitude="" method="POST">
+          <form id="${counter}" data-latitude="" data-longitude="" >
           <div>
             <input type="text" class="form-control" name="title" placeholder="Title"></input>
           </div>
@@ -181,15 +188,27 @@ function createEntryField(counter, latitude, longitude) {
   $("form").submit(postMarkerInfo);
 }
 
-function postMarkerInfo(e) {
+function postMarkerInfo(e, ajaxUpdateMarkers) {
   e.preventDefault();
-  console.log($( this ).serialize());
+  var $theThing = $(this)
   $.ajax({
     url: '/api/collections/addmarker/' + cid,
     method: 'POST',
     data: $(this).serialize(),
-    success: $( this ).remove()
-  });
+    success: $(this).remove()
+  })
+}
+
+ajaxUpdateMarkers = function() {
+  markers = [];
+  initMap;
+  updateMarkers();
+}
+
+function wipeNReload(theThing) {
+  console.log("this should be happening.")
+  console.log(updateMarkers)
+  initMap();
 }
 
 // $(document).ready(loadTweets);

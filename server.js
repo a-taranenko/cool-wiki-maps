@@ -31,6 +31,7 @@ function sessionCheck(req, cb) {
       cb (null, response.rows[0])
   })
     .catch((error) => {
+      console.log("Auth error:", error)
       cb (null, false)
     })
 }
@@ -55,6 +56,8 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap-validator/dist'));
 app.use(cookieParser())
+
+//Session Auth MiddleWare
 app.use(function(req, res, next) {
   if (!req["wikimap"]) req.wikimap = {}
   sessionCheck(req, (err, loggedin)=> {
@@ -89,7 +92,7 @@ app.get("/", (req, res) => {
 // })
 
 app.get("/maps", (req, res) => {
-  let templateVars = { maps: res.locals.allMaps };
+  let templateVars = { maps: res.locals.allMaps, username: req.cookies.username, login: req.wikimap.login };
   console.log(res.locals.allMaps);
   res.render("maps", templateVars);
 });

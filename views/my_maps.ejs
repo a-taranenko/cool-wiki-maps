@@ -51,13 +51,6 @@
         border-bottom-width: 0;
       }
     </style>
-    <script type="text/javascript">
-    var uid = false;
-    if (<%= uid %>) {uid = <%= uid %>}
-      console.log(cid)
-      var username = false;
-      if (<%= username %>) {username = <%= username %>}
-    </script>
   </head>
 
   <body>
@@ -67,7 +60,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4>
-            Existing Maps
+            My Maps
           </h4>
         </div>
         <table class="table table-fixed">
@@ -88,7 +81,7 @@
               <td class="col-xs-2"><%= maps[key].owner_id %></td>
               <td class="col-xs-2"><%= maps[key].collection_name %></td>
               <td class="col-xs-4"><%= maps[key].desc %></td>
-              <td class="col-xs-2"><a href="view_map/<%= maps[key].cid %>"><button>View</button></a></td>
+              <td class="col-xs-2"><a href="http://localhost:8080/view_map/<%= maps[key].cid %>"><button>View</button></a></td>
             </tr>
             <% } %>
           </tbody>
@@ -96,39 +89,5 @@
       </div>
     </div>
     </div>
-
-    <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
-    <% if (username) { %>
-    <div class="container bootstrap-iso">
-     <div class="container-fluid">
-      <div class="row">
-       <div class="col-md-6 col-sm-6 col-xs-12">
-        <form method="POST" action="/api/collections/addcollection">
-         <div class="form-group">
-          <label class="control-label" for="name">
-           New Map Name
-          </label>
-          <input class="form-control" id="name" name="name" type="text"/>
-         </div>
-         <div class="form-group">
-          <label class="control-label " for="subject">
-           Map Description
-          </label>
-          <input class="form-control" id="subject" name="desc" type="text"/>
-          <input type="hidden" name="uid" value="<%= uid %>">
-         </div>
-         <div class="form-group">
-          <div>
-           <button class="btn btn-primary " name="submit" type="submit">
-            Create New Map
-           </button>
-          </div>
-         </div>
-        </form>
-       </div>
-      </div>
-     </div>
-    </div>
-    <% } %>
   </body>
 </html>
