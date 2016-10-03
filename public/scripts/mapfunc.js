@@ -17,7 +17,7 @@ function initMap() {
   });
 
   $.ajax({
-    url: `/api/collections/1`,
+    url: `/api/collections/` + cid,
     method: 'GET',
     dataType: 'json',
     //data: locations,
@@ -113,15 +113,6 @@ function placeMarker(latLng, map) {
 function pullMarkerInfo(markers) {
   $(".well").empty();
 
-  $(".well").append( $(`<p>Markers</p>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-      </tr>`) );
-
   for (obj of markers) {
     $(".well").append(createRow(obj.marker))
     console.log(obj.marker)
@@ -154,6 +145,7 @@ function createRow(markerObject) {
 
 // a function that would add a card (text entry) on the left of the web page
 function createEntryField(counter, latitude, longitude) {
+  console.log("WORKS")
   $(".left-container").append( $(`
 
       <div class="business-card" style=" width:100%; ">
@@ -193,7 +185,7 @@ function postMarkerInfo(e) {
   e.preventDefault();
   console.log($( this ).serialize());
   $.ajax({
-    url: '/api/collections/add/1',
+    url: '/api/collections/addmarker/' + cid,
     method: 'POST',
     data: $(this).serialize(),
     success: $( this ).remove()

@@ -71,7 +71,7 @@ app.use("/maps", mapRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index", {username: req.cookies.username, login: req.wikimap.login});
+  res.render("index", {username: req.cookies.username, login: req.wikimap.login, cid: false});
 });
 
 //Login page
@@ -93,6 +93,11 @@ app.get("/maps", (req, res) => {
   console.log(res.locals.allMaps);
   res.render("maps", templateVars);
 });
+
+app.get("/view_map/:cid", (req, res) => {
+  res.render("index", {username: req.cookies.username, login: req.wikimap.login, cid: req.params.cid});
+});
+
 
 // app.post("/api/collections/:id", (req, res) => {
 //   console.log(req.params.body)
