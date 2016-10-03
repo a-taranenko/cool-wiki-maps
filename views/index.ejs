@@ -12,6 +12,9 @@
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript">
+      var cid = <%- cid %>;
+    </script>
 
     <!-- Get markers for a particular map using AJAX -->
 
@@ -50,6 +53,11 @@
   <body>
             <%- include('navbar'); %>
 
+    <div class='container-fluid height-100' style="padding-top: 51px;">
+        <div class="row height-100">
+
+    <div class="container left-container" style="z-index: 50"></div>
+
     <div class='container-fluid height-100' style="padding-left:0; padding-right:0; padding-top: 51px;">
         <div class="row height-100" style="margin-top: 0;">
             <div class="col-md-12 height-100" id="no-padding">
@@ -59,6 +67,7 @@
     </div>
 
     <%- include('markers_list') %>
-
+        </div>
+    </div>
   </body>
 </html>
