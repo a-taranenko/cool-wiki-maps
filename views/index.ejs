@@ -38,18 +38,23 @@
   height: 120px;
   background: white;
 }
-.job {
-  color: #666666;
-  font-size: 17px;
+.row{
+    margin-top:40px;
+    padding: 0 10px;
 }
-.mail {
-  font-size: 16px;
- }
+
+.clickable{
+    cursor: pointer;
+}
+
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
   </style>
 
   <body>
             <%- include('navbar'); %>
-
     <div class='container-fluid height-100' style="padding-left:0; padding-right:0; padding-top: 51px;">
         <div class="row height-100" style="margin-top: 0;">
             <div class="col-md-12 height-100" id="no-padding">
@@ -59,6 +64,7 @@
     </div>
 
     <%- include('markers_list') %>
+    <%- include('left-container') %>
 
   </body>
 </html>

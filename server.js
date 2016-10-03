@@ -27,9 +27,6 @@ function sessionCheck(req, cb) {
   let sessionID = req.cookies.sessionID
   knex.raw('SELECT username, uid FROM users WHERE session_id=?;', sessionID)
     .then((response) => {
-      if (response.rows[0] === undefined) {
-        response.rows[0] = {user_id: false, username: false}
-      }
       console.log("Page requested by user:", response.rows[0])
       cb (null, response.rows[0])
   })
@@ -77,11 +74,8 @@ app.get("/", (req, res) => {
   res.render("index", {username: req.cookies.username, login: req.wikimap.login});
 });
 
-// Login page
-app.get("/login", (req, res) => {
-  res.render("login");
-});
 //Login page
+
 
 //logout
 // app.post("/logout", (req, res) => {
@@ -95,7 +89,7 @@ app.get("/login", (req, res) => {
 // })
 
 app.get("/maps", (req, res) => {
-  let templateVars = { maps: res.locals.allMaps, user_id: req.wikimap.login };
+  let templateVars = { maps: res.locals.allMaps };
   console.log(res.locals.allMaps);
   res.render("maps", templateVars);
 });
