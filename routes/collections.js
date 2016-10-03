@@ -6,7 +6,34 @@ const bodyParser  = require("body-parser");
 const app         = express();
 app.use(bodyParser.urlencoded({ extended: true, type: "*/*" }));
 
+
+
 module.exports = (knex) => {
+
+// let logInStatus = undefined;
+
+// function sessionCheck(req, cb) {
+// let sessionID = req.cookies.sessionID
+// knex.raw('SELECT EXISTS(SELECT 1 FROM users WHERE session_id=?;)', sessionID)
+//   .then((response) => {
+//     console.log("Page requested by LOGGED IN user:", response.rows[0])
+//     cb (null, response.rows[0])
+//     next()
+//   })
+//   .catch((error) => {
+//     console.log("Auth error:", error)
+//     cb (null, false)
+//     next()
+//   })
+// }
+
+// app.use(function(req, res, next) {
+//  sessionCheck(req, (err, loggedin)=> {
+//   logInStatus = loggedin
+//   console.log("log in status: ", logInStatus)
+//   next()
+//  })
+// })
 
   router.get("/:cid", (req, res) => {
     knex
@@ -17,6 +44,7 @@ module.exports = (knex) => {
         res.json(results);
     });
   });
+  // if (logInStatus) {
 
   router.get("/user/:username", (req, res) => {
     knex('users')
@@ -30,6 +58,7 @@ module.exports = (knex) => {
             res.render("my_maps", templateVars)
           })
   });
+
 
   router.post("/addcollection", (req, res) => {
     let body = req.body;
@@ -68,7 +97,14 @@ module.exports = (knex) => {
     })
   })
 
-
+// } else {
+//   router.post('/*', (req, res) => {
+//     res.render('notLoggedIn')
+//   })
+//   router.get('/*', (req, res) => {
+//     res.render('notLoggedIn')
+//   })
+// }
   // router.get("/add/:cid", (req, res) => {
   //   knex
   //     .select("marker")
