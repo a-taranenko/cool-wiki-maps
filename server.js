@@ -27,6 +27,9 @@ function sessionCheck(req, cb) {
   let sessionID = req.cookies.sessionID
   knex.raw('SELECT username, uid FROM users WHERE session_id=?;', sessionID)
     .then((response) => {
+      if (response.rows[0] === undefined) {
+        response.rows[0] = {user_id: false, username: false}
+      }
       console.log("Page requested by user:", response.rows[0])
       cb (null, response.rows[0])
   })
