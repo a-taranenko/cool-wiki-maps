@@ -45,12 +45,16 @@ module.exports = (knex) => {
   router.get(('/:username'), (req, res) => {
     // SELECT users.name, username, email, collections.name, collections.desc FROM users JOIN collections ON (uid = owner_id) WHERE username = 'mrtesty';
     knex('users')
-      .leftJoin('collections', 'users.uid', '=', 'collections.owner_id')
-      .select('users.name', 'users.username', 'users.email', 'collections.collection_name', 'collections.desc')
+      .select('name', 'username', 'email')
       .where('users.username', req.params.username)
       .then((results) => {
-        //res.json(results);
-        res.render('profile', {results: JSON.stringify(results)});
+        console.log(results)
+        let passIN = {
+          name: results[0].name,
+          username: results[0].username,
+          email: results[0].email
+        }
+        res.render('profile', passIN);
       });
   });
 

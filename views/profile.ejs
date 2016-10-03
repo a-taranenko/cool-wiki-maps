@@ -11,7 +11,6 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="   sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script type="text/javascript">
-var everything = <%- results %>
 </script>
 <style type="text/css">
   .user-row {
@@ -50,15 +49,19 @@ var everything = <%- results %>
 
 </style>
   <title></title>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
+
 <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 
 
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title"> USERNAME </h3>
+              <h3 class="panel-title"><%= username %></h3>
             </div>
             <div class="panel-body">
               <div class="row">
@@ -68,18 +71,18 @@ var everything = <%- results %>
                     <tbody>
                       <tr>
                         <td>Name:</td>
-                        <td></td>
+                        <td><%= name %></td>
                       </tr>
                       <tr>
                         <td>Email:</td>
-                        <td> email</td>
+                        <td><%= email %></td>
                       </tr>
                       </tr>
 
                     </tbody>
                   </table>
 
-                  <a href="#" class="btn btn-primary">Collections Owned</a>
+                  <a href="/api/collections/user/<%= username %>" class="btn btn-primary">Collections Owned</a>
                 </div>
               </div>
             </div>
@@ -88,5 +91,6 @@ var everything = <%- results %>
         </div>
       </div>
     </div>
+
 </body>
 </html>

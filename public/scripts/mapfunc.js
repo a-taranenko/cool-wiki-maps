@@ -62,7 +62,7 @@ function initMap() {
 
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-  var infowindow = new google.maps.InfoWindow();
+  //var infowindow = new google.maps.InfoWindow();
 
   autocomplete.addListener('place_changed', function(e) {
     infowindow.close();
